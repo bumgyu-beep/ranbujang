@@ -619,7 +619,7 @@ async function saveCheck(){
     await db.collection('checks').add({at:new Date().toISOString(),project:S.project.trim(),who:names,short,snap});
     await clearDrafts();S.busy=false;queueSync();
     toast(short.length?`저장했어요. ${short.length}종은 보충 탭에서 채우세요`:'저장했어요');
-    if(short.length){S.tab='supply';store.set('tab','supply')}render();window.scrollTo(0,0);
+    render();
   }catch(err){S.busy=false;render();toast(errMsg(err))}
 }
 function openMove(id,from){
