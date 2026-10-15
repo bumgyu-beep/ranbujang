@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 팀 비밀번호로 들어온 기기만 읽고 쓸 수 있어요
+    function member() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/members/$(request.auth.uid));
+    }
+
+    // 팀 비밀번호 (시트 스크립트만 씀, 아무도 읽을 수 없음)
+    match /config/{doc} { allow read, write: if false; }
+
+    // 비밀번호가 맞을 때만 기기 등록
+    match /members/{uid} {
+      allow create: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.pw == get(/databases/$(database)/documents/config/secret).data.pw;
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow update, delete: if false;
+    }
+
+    match /items/{doc}     { allow read, write: if member(); }
+    match /checks/{doc}    { allow read, write: if member(); }
+    match /draft/{doc}     { allow read, write: if member(); }
+    match /draftinfo/{doc} { allow read, write: if member(); }
+    match /presence/{doc}  { allow read, write: if member(); }
+
+    // 시트 동기화 상태 (시트 스크립트만 씀)
+    match /sync/{doc} { allow read: if member(); allow write: if false; }
+  }
+}
