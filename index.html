@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#F4F5F7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="란부장">
@@ -36,6 +36,7 @@
   --short:#FF6669; --short-bg:#341618; --over:#A9BEEE; --over-bg:#18213A;
   --shadow:0 1px 2px rgba(0,0,0,.3); color-scheme:dark}
 *{box-sizing:border-box}
+html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-x:none}
 img{max-width:100%}[hidden]{display:none!important}
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;
@@ -218,6 +219,12 @@ nav.tabs .badge{position:absolute;top:3px;right:calc(50% - 24px);background:var(
 <div class="toast" id="toast" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+/* 핀치·두 번 탭 확대 막기 (iOS 사파리는 viewport 설정만으로는 안 막힘) */
+['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+let lastTouch=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-lastTouch<300&&!(e.target.closest&&e.target.closest('input,textarea,select')))e.preventDefault();lastTouch=n},{passive:false});
+</script>
 <script type="module">
 /* ===== 설정: 파이어베이스 콘솔에서 복사한 값으로 바꾸세요 ===== */
 const FIREBASE_CONFIG={apiKey:"AIzaSyBS7OtP8nT6enqvtU0SXAK5EnJd0jdxxOM",authDomain:"ranbujang-28e96.firebaseapp.com",projectId:"ranbujang-28e96",storageBucket:"ranbujang-28e96.firebasestorage.app",messagingSenderId:"903574693634",appId:"1:903574693634:web:b9cae26a09b45c3d04441b"};
