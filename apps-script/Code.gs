@@ -6,7 +6,7 @@
  *  2) 위 메뉴에서 함수 'setup' 을 선택하고 ▶ 실행 → 권한 허용
  * 비밀번호를 바꿀 때: TEAM_PASSWORD 를 고치고 'changePassword' 실행
  */
-const PROJECT_ID = '';            // 파이어베이스 프로젝트 ID (예: ranbujang-1a2b3)
+const PROJECT_ID = 'ranbujang-28e96';
 const TEAM_PASSWORD = '';         // 팀 비밀번호
 const SHEET_NAME = '자체비품';
 const FIRST_ROW = 8;              // 표의 첫 데이터 줄 (B열 '위치'부터 I열 '비고'까지)
