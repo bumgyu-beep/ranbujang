@@ -223,7 +223,6 @@ nav.tabs .badge{position:absolute;top:3px;right:calc(50% - 24px);background:var(
 /* 핀치·두 번 탭 확대 막기 (iOS 사파리는 viewport 설정만으로는 안 막힘) */
 ['gesturestart','gesturechange','gestureend'].forEach(t=>document.addEventListener(t,e=>e.preventDefault(),{passive:false}));
 document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
-let lastTouch=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-lastTouch<300&&!(e.target.closest&&e.target.closest('input,textarea,select')))e.preventDefault();lastTouch=n},{passive:false});
 </script>
 <script type="module">
 /* ===== 설정: 파이어베이스 콘솔에서 복사한 값으로 바꾸세요 ===== */
